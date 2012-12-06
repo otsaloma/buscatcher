@@ -118,6 +118,18 @@ class buscatcher(gtk.Window):
         except Exception:
             pass
 
+    def remove_bus(self, busid):
+        bus = self.buses[busid]
+        try:
+            self.osm.remove_image(bus["type_icon"])
+        except Exception:
+            pass
+        try:
+            self.osm.remove_image(bus["route_icon"])
+        except Exception:
+            pass
+        self.buses.pop(busid)
+
     def get_location(self):
         # if options.no_update_position:
         #     return
@@ -249,6 +261,7 @@ class buscatcher(gtk.Window):
         # See HSL Live 1.6 documentation.
         # http://developer.reittiopas.fi/pages/en/other-apis.php
         csv = csv.splitlines()
+        prev_ids = self.buses.keys()
         for line in csv:
             items = line.split(";")
             try:
@@ -264,6 +277,10 @@ class buscatcher(gtk.Window):
             bus["type_icon_path"] = icons[0]
             bus["route_icon_path"] = icons[1]
             self.update_bus(bus)
+            if bus["id"] in prev_ids:
+                prev_ids.remove(bus["id"])
+        for busid in prev_ids:
+            self.remove_bus(busid)
 
     def download_icons(self, bus):
         # Let's borrow icons from the official web interface.
