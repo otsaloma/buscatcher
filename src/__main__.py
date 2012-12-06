@@ -80,6 +80,7 @@ class buscatcher(gtk.Window):
         self.set_title('Helsinki Bus Catcher')
 
         self.osm = osmgpsmap.GpsMap(repo_uri=repo_uri)
+        self.osm.layer_add(osmgpsmap.GpsMapOsd(show_zoom=True))
 
         #connect keyboard shortcuts
         self.osm.set_keyboard_shortcut(osmgpsmap.KEY_FULLSCREEN, gtk.gdk.keyval_from_name("F11"))
