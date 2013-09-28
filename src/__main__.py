@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """
  Copyright (C) Henri Bergius 2010 <henri.bergius@iki.fi>
- Copyright (C) Osmo Salomaa 2012 <otsaloma@iki.fi>
+ Copyright (C) Osmo Salomaa 2012-2013 <otsaloma@iki.fi>
  Based on adventure_tablet by:
  Copyright (C) Susanna Huhtanen 2010 <ihmis.suski@gmail.com>
 
@@ -290,8 +290,9 @@ class buscatcher(gtk.Window):
             type_name = "tram"
         elif bus["id"].startswith("metro"):
             type_name = "metro"
+        elif bus["id"].startswith("H"):
+            type_name = "train"
         else:
-            # TODO: Add trains.
             type_name = "bus"
         bearing = round(bus["bearing"]/45.0)*45
         if bearing > 315: bearing = 0
